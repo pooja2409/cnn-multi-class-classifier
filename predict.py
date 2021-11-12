@@ -19,6 +19,9 @@ def parse_arguments():
 	parser.add_argument("--saved_model_location", type=str, default="models/base_model.h5", help="Location to save the model after training")
 	parser.add_argument("--use_image", default=False, action='store_true', help="use a new image for testing outside fmnist dataset")
 	parser.add_argument("--image_location", type=str, default="images/test1.png", help="image for testing outside fmnist dataset")
+	parser.add_argument("--custom_labels", nargs="+", type=str, default= \
+		['t_shirt_top', 'trouser', 'pullover', 'dress', 'coat', 'sandal', \
+			'shirt', 'sneaker', 'bag', 'ankle_boots'], help="labels for testing outside fmnist dataset")
 	
 	return parser.parse_args()
 
@@ -53,7 +56,6 @@ def predict(img, saved_model_location, input_shape):
 # driver function to test the model with arguments
 def main():
 	args = parse_arguments()
-	labels = ['t_shirt_top', 'trouser', 'pullover', 'dress', 'coat', 'sandal', 'shirt', 'sneaker', 'bag', 'ankle_boots']
 	if not args.use_image:
 		print("Evaluating model on Fashion MNIST dataset")
 		_, _, testX, testY= load_dataset(args.input_shape)
@@ -63,6 +65,6 @@ def main():
 		print("Predicting output using the image file")
 		img = imageio.imread(args.image_location)
 		result = predict(img, args.saved_model_location, tuple(args.input_shape))
-		print(f"The prediction for given input image is : {labels[result]}")
+		print(f"The prediction for given input image is : {args.custom_labels[result]}")
 
 main()
