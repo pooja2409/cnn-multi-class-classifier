@@ -14,7 +14,7 @@ python train.py \
 
 # case 2 : training model on generic dataset using image and label files
 python train.py \
-	--dataset fmnist
+	--dataset other
 	--num_classes 10 \
 	--input_shape 28 28 1 \
 	--lr 0.01 \
@@ -24,4 +24,5 @@ python train.py \
 	--verbose 1 \
 	--n_folds 5 \
 	--saved_model_location models/base_model.h5
+	--dataset_location data/
 

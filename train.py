@@ -29,6 +29,8 @@ def parse_arguments():
     parser.add_argument("--verbose", type=int, default=1, help="Verbose for model, 0 for silent")
     parser.add_argument("--n_folds", type=int, default=5, help="Number of folds for K fold Validation")
     parser.add_argument("--saved_model_location", type=str, default="models/", help="Location to save the model after training")
+	parser.add_argument("--dataset_location", type=str, default="data/", help="Location where image data is stored")
+
 
     return parser.parse_args()
  
@@ -45,16 +47,24 @@ def load_fmnist_dataset(input_shape):
 	return trainX, trainY, testX, testY
 
 # load train and test dataset using image and label files
-def load_generic_dataset(input_shape):
-	# load dataset
-	(trainX, trainY), (testX, testY) = fashion_mnist.load_data()
-	# reshape dataset to have a single channel
-	trainX = trainX.reshape((trainX.shape[0], input_shape[0], input_shape[1], input_shape[2]))
-	testX = testX.reshape((testX.shape[0], input_shape[0], input_shape[1], input_shape[2]))
-	# one hot encode target values
-	trainY = to_categorical(trainY)
-	testY = to_categorical(testY)
-	return trainX, trainY, testX, testY
+def load_generic_dataset(img_folder, input_shape):   
+    img_data_array=[]
+    class_name=[]
+   
+   # iterate over the directory
+    for dir1 in os.listdir(img_folder):
+		# iterate over each image file in dir
+        for file in os.listdir(os.path.join(img_folder, dir1)):
+            image_path= os.path.join(img_folder, dir1,  file)
+			# read the image using cv2
+            image= cv2.imread(image_path, cv2.COLOR_BGR2RGB)
+			# resize image based on input shape
+            image=cv2.resize(image, (input_shape[0], input_shape[1]),interpolation = cv2.INTER_AREA)
+            image=np.array(image)
+            image = image.astype('float32')
+            img_data_array.append(image)
+            class_name.append(dir1)
+    return img_data_array, class_name
 
  
 # define cnn model
@@ -97,13 +107,12 @@ def main():
     if args.dataset == "fmnist":
         trainX, trainY, _, _ = load_fmnist_dataset(args.input_shape)
     else:
-        trainX, trainY, _, _ = load_generic_dataset()
+        trainX, trainY = load_generic_dataset(args.dataset_location, args.input_shape)
     print("Dataset Loaded")
     print("Starting Training")
     model = train_model(trainX, trainY, args)
     print(f"Saving model in folder {args.saved_model_location}")
     save_model(model, args.saved_model_location)
-
 
 main()
 
