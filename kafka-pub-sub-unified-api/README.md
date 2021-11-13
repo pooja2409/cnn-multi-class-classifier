@@ -1,7 +1,7 @@
 # PART 2
-## Unified API to send and receive messages to / from Apache Kafka​ and ​Google Pub/Sub​.
+## Unified API to send and receive messages to / from Apache Kafka and Google Pub/Sub.
 
-Setup Kafka: A distributed platform for reading and writing data streams
+### Setup Kafka: A distributed platform for reading and writing data streams ###
 1. Download latest kafka tar.gz file
 2. `cd kafka_2.12-3.0.0/`
 3. Kafka requires ZooKeeper in order to run
@@ -12,7 +12,7 @@ Setup Kafka: A distributed platform for reading and writing data streams
 `./kafka-topics.sh --create --topic my-topic --bootstrap-server localhost:9092 --replication-factor 1 --partitions 4` 
 6. Kafka is set and reddy to be used
 
-Setup Google Pub-Sub Emulator:
+### Setup Google Pub-Sub Emulator: ###
 The Pub/Sub Emulator for Kafka emulates the Pub/Sub API while using Kafka to process the messages. The emulator runs as a standalone Java application, which makes it easy to deploy alone or inside an AppScale deployment.
 1. Cloning the kafka-pubsub-emulator repo in localhost
 `git clone https://github.com/GoogleCloudPlatform/kafka-pubsub-emulator.git`
@@ -23,7 +23,7 @@ The Pub/Sub Emulator for Kafka emulates the Pub/Sub API while using Kafka to pro
 6. The two files config.json and pubsub.json are created containing all the configs and subscription details, use these files in the java -jar call
 `java --add-opens java.base/java.lang=ALL-UNNAMED -jar target/kafka-pubsub-emulator-0.1.0.jar -c config.json -p pubsub.json`
 
-Unified API
+### Unified API ###
 Using the API in the application requires the Pub/Sub Client Libraries. Normally these libraries would contact the Cloud Pub/Sub service, but instead of pointing them to a cloud endpoint, I am pointing them to the local server.
 
 Sender.py is used as a publisher that publishes a message and receiver.py has subscribed to the service and receives the message
