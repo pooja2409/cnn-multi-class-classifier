@@ -1,0 +1,20 @@
+{
+  "projects":[
+    {
+      "name":"test-project",
+      "topics":[
+
+        {
+            "name":"test-project-8p",
+            "kafkaTopic":"my-topic",
+            "subscriptions":[
+              {
+                "name":"subscription-to-my-topic",
+                "ackDeadlineSeconds":10
+              }
+            ]
+          }
+      ]
+    }
+  ]
+}
