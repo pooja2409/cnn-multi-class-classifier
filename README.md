@@ -2,12 +2,8 @@
 ## CNN-Multi-Class-Classifier usign Fashion MNIST Dataset
 
 Model Architecture:
-  The baseline CNN model consists of 1 convolution layer, 1 maxpool layer,  and 2 dense layers.
-  RELU activation is used to add some non-linearity in the model and 
-  Stochastic gradient decent over normal gradient decent is used for faster calculations than gradient descent and batch gradient descent
-  The baseline model can be improved by making the network more robus by adding more CONV2D layers. This will improve the feature generation and
-  to make sure the model doesnot overfit on the training data drop outs can be added in between during training.
-  
+  The model has two main aspects: the feature extraction front end comprised of convolutional and pooling layers, and the classifier backend that will make a prediction. For the convolutional front-end, I started with a single convolutional layer with a small filter size (3,3) and a modest number of filters (32) followed by a max pooling layer. The filter maps can then be flattened to provide features to the classifier. Given that the problem is a multi-class classification, we know that it will require an output layer with 10 nodes in order to predict the probability distribution of an image belonging to each of the 10 classes. This will also require the use of a softmax activation function. Between the feature extractor and the output layer, I added a dense layer to interpret the features, in this case with 100 nodes. All layers will use the ReLU activation function and the weight initialization scheme, both best practices.
+I used a conservative configuration for the stochastic gradient descent optimizer with a learning rate of 0.01 and a momentum of 0.9. The categorical cross-entropy loss function will be optimized, suitable for multi-class classification, and I will monitor the classification accuracy metric, which is appropriate given fashion mnist dataset has the same number of examples in each of the 10 classes.
 
 Setup the environment to train/test the model
 1. Create a virtual environment:
