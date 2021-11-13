@@ -30,4 +30,4 @@ if __name__ == '__main__':
 
 	# Keep the process running.
     while True:
-        time.sleep(60)
+        time.sleep(2)
