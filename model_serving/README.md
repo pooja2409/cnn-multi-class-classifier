@@ -8,9 +8,11 @@ Steps to start the model server
 `source cnnenv.bin.activate`
 2. Install other packages required for part 3
 `pip install -r requirements.txt`
-3. Run the model_server with arguments using model_server.py file
+3. Move to the model_serving folder
+`cd model_serving`
+4. Run the model_server with arguments using model_server.py file
 `python model_server.py --saved_model_location ../models/base_model.h5 --input_shape 28 28 1`
-4. Please note it take two arguments the saved model location and the input shape that must have been used while training
+5. Please note it take two arguments the saved model location and the input shape that must have been used while training
 
 
 Endpoints:
@@ -28,9 +30,11 @@ Steps to start the sender service:
 `source cnnenv.bin.activate`
 2. Install other packages required for part 3
 `pip install -r requirements.txt`
-3. Run the publisher_service with arguments using sender_service.py file
+3. Move to the model_serving folder
+`cd model_serving`
+4. Run the publisher_service with arguments using sender_service.py file
 `python sender_service.py --host localhost --port 8080 --project-id test-project --topic-id test-project-8p --model_server_url http://localhost:5000/predict`
-4. Please note for the sender service to function make sure that the model server is up and running.
+5. Please note for the sender service to function make sure that the model server is up and running.
 
 Endpoint for sender service:
     1. http://localhost:5001/
@@ -41,7 +45,7 @@ Endpoint for sender service:
 ### Receiving the messages from the service ###
 The receiver remains the same as in part 2, a queue that is subscribed to the same topic where the model results are published.
 Run the receiver.py from part 2 to see the response
-1. `cd ../kafka-pub-sub-unified-api` 
+1. `cd kafka-pub-sub-unified-api` 
 `python receiver.py --host localhost --port 8080 --project-id test-project --subscription-id subscription-to-my-topic`
 The output will look something like this
 ```
